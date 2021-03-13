@@ -1,9 +1,9 @@
 /*                                                  NOTE
-*   i removed notes from previous capstone, if needed we can go back and look there if one does not understand something
-*   i will only be commenting on the new code
-*   The city entered in prompt needs to be same as in driver.txt
-*   There will be an original driver.txt file outside of project.
-* */
+ *   i removed notes from previous capstone, if needed we can go back and look there if one does not understand something
+ *   i will only be commenting on the new code
+ *   The city entered in prompt needs to be same as in driver.txt
+ *   There will be an original driver.txt file outside of project.
+ * */
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -21,13 +21,17 @@ public class Delivery {
         String[] spaghetna = {"Bolognese", "60", "Mac & Cheeze", "40", "Chicken A La King", "70", "Lasagna", "99"};
         String[] fatBurger = {"FatCheezy", "110", "DoubleFatty", "150", "Fat-BLT", "110", "ChickenFatty", "95"};
         String[] iSeaFood = {"Surf & Turf", "165", "Hake & Chips", "90", "Sushi Special", "200", "Calamari & Chips", "110"};
+
         ArrayList<Integer> mealOrderInfo = new ArrayList<>();
         ArrayList<String> customerOrderArray = new ArrayList<>();
         ArrayList<String> locationArray = new ArrayList<>();// gets all locations from the list and saves them here
         ArrayList<String> customerLocationArray = new ArrayList<>();//  contains the customers and their location
+
         String driverName, updatedDriverLoadList;// updateddriverlist is the new list with updated load
+
         int mealCount, whichRestaurant, mealType, orderNumber = 0;
         boolean customerSelectionState, stateMain, anotherItem; // changed another item to bool was int in task7
+
         // added do while to be able to have multiple customers
         do {
             mealOrderInfo.clear();// clearing meal order info for new customer
@@ -41,6 +45,7 @@ public class Delivery {
             whichRestaurant = selection(restaurants);
 
             customerSelectionState = true; // some variables were renamed for better reading of code
+
             while (customerSelectionState) {
                 mealType = mealSelect(whichRestaurant, pizzario, spaghetna, fatBurger, iSeaFood);
                 mealCount = testMealQuantity();
@@ -64,35 +69,40 @@ public class Delivery {
                     orderNumber);
 
             driverName = readFile(restaurant1.location);
+
             writeInvoiceFile(driverName, customer1, restaurant1);
+
             // customerList is used to create 2 new arraylists for new text file information
             customerList(customerOrderArray, customerLocationArray, customer1, restaurant1);
+
             updatedDriverLoadList = driverAddLoad(driverName);// used to update list with new load
+
             writeCustomerOrderFile(updatedDriverLoadList);// writes changes to file driver.txt
+
             stateMain = testInputString("Would you like to add a customer? y/n: ");// for new customers
+
         } while (stateMain);// as long as a new customer wants to be added this will loop
 
         Collections.sort(customerOrderArray);// sorts array alphabetically
         writeCustomerOrderFile(customerOrderArray);// then writes new sorted array to file
         readNamesLocation(locationArray);// get all possible city names from driver.txt will be used later
         // writes the .txt file with customer names and location and grouping them together by location
-        writeNamesLocation(locationArray,  customerLocationArray);
+        writeNamesLocation(locationArray, customerLocationArray);
     }
 
     //methods
+
     //method for testing a string input // basically defensive programming
-    static boolean testInputString(String testString){
+    static boolean testInputString(String testString) {
         String temp = inputDescription(testString).toLowerCase();// in case user enters capitals
-            if(temp.equals("y")){
-                return true;
-            }
-            else if(temp.equals("n")){
-                return false;
-            }
-            else{ // defensive programming
-                System.out.println("You must enter a letter \"y\" (yes) or \"n\" (no) ");
-                return testInputString(testString);
-            }
+        if (temp.equals("y")) {
+            return true;
+        } else if (temp.equals("n")) {
+            return false;
+        } else { // defensive programming
+            System.out.println("You must enter a letter \"y\" (yes) or \"n\" (no) ");
+            return testInputString(testString);
+        }
     }
 
     // method for printing and returning input from scanner
@@ -122,8 +132,7 @@ public class Delivery {
                     System.out.println("Wrong Number entered Try again!");
                     System.out.println("Select Restaurant by entering a number 1 - 4:\n");
                 }
-            }
-            catch (Exception e){
+            } catch (Exception e) {
                 System.out.println("invalid entry, enter a number not a character or word");
                 System.out.println("Select Restaurant by entering a number 1 - 4:\n");
             }
@@ -156,18 +165,18 @@ public class Delivery {
         }
         return mealType;
     }
+
     // testing whether correct value was entered// towards defensive programming
-    static int testMealQuantity(){
+    static int testMealQuantity() {
         int temp = 0;
         try { // in case a string is entered and not a number
             // if a string is entered try catch will take control if wrong number entered the if statement will control
             temp = Integer.parseInt(inputDescription("how many of this meal? "));
-            if(temp <= 0 || temp > 100){
+            if (temp <= 0 || temp > 100) {
                 System.out.println("Invalid number entered, enter a number from 1 to 100");
                 return testMealQuantity();
             }
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             System.out.println("invalid entry, enter a number not a character or word");
             testMealQuantity();// recursive for user to attempt the correct input
         }
@@ -183,14 +192,13 @@ public class Delivery {
             foodItemNr++;
         }
         do { // defensive programming will not explain again since it was explained above
-            try{
+            try {
                 System.out.println("Select meal form numbers:");
                 selectedNr = Integer.parseInt(input.next());
                 if (selectedNr < 1 || selectedNr > 4) {
                     System.out.println("wrong number entered, try again!");
                 }
-            }
-            catch (Exception e){
+            } catch (Exception e) {
                 System.out.println("invalid entry! enter a number not a character or a word, try again!");
             }
         } while (selectedNr < 1 || selectedNr > 4);
@@ -253,7 +261,7 @@ public class Delivery {
     }
 
 
-    static void readNamesLocation (ArrayList<String> locationArray) {
+    static void readNamesLocation(ArrayList<String> locationArray) {
         String inputString;
         String[] parts;
         try {// used mainly for if file not present
@@ -263,7 +271,7 @@ public class Delivery {
                 inputString = scanner.nextLine();
 
                 parts = inputString.split(", ");
-                if(!locationArray.contains(parts[1])){
+                if (!locationArray.contains(parts[1])) {
                     locationArray.add(parts[1]);
                 }
             }
@@ -272,27 +280,29 @@ public class Delivery {
             System.out.println("Error");
         }
     }
+
     // used to reconstruct driver.txt with added driver load
     // if a driver was selected the load of that driver will increment
     // then we need to update the .txt file for as soon as a new customer is added
-    static String driverAddLoad (String dName) {
+    static String driverAddLoad(String dName) {
         String inputString, updatedDriverList = "";
         String[] parts;
         int tempNumber;
         try {
             File x = new File("driver-info.txt");
             Scanner scanner = new Scanner(x);
+
             while (scanner.hasNextLine()) {
                 inputString = scanner.nextLine();
                 parts = inputString.split(", ");
                 // in case load is null and no load was given to driver.txt list
-                if(parts[0].equals(dName) && parts.length < 3){
+                if (parts[0].equals(dName) && parts.length < 3) {
                     updatedDriverList += parts[0] + ", " + parts[1] + ", " + 1 + "\r\n";
                 }
                 // else if driver name is same as nextline in driver.txt the load will be incremented
-                else if(parts[0].equals(dName)){
+                else if (parts[0].equals(dName)) {
                     tempNumber = (Integer.parseInt(parts[2]) + 1);
-                    updatedDriverList +=  parts[0] + ", " + parts[1] + ", " + tempNumber + "\r\n";
+                    updatedDriverList += parts[0] + ", " + parts[1] + ", " + tempNumber + "\r\n";
                 }
                 // else no changes will be made
                 else {
@@ -308,6 +318,7 @@ public class Delivery {
 
     static void writeInvoiceFile(String driverName, Customer customer1, Restaurant restaurant1) {
         String invoice, list = "";
+
         try {// mainly used for write failure
             FileWriter newTextCypher = new FileWriter("invoice.txt");
             if (!driverName.equals("none")) {
@@ -333,15 +344,16 @@ public class Delivery {
                 newTextCypher.write("\"Sorry! Our drivers are too far away from you to be able to\r\n"
                         + "deliver to your location.\"");
             }
-
             newTextCypher.close();
         } catch (Exception e) {
             System.out.println("Error");
         }
     }
+
     // method for assembling the string to print the sorted customer with order number array
     static void writeCustomerOrderFile(ArrayList<String> customerOrderArray) {
         String customerAndOrder = "";
+
         try {
             FileWriter customerOrderNumber = new FileWriter("Customer&OrderNumber.txt");
             for (String s : customerOrderArray) {
@@ -353,17 +365,20 @@ public class Delivery {
             System.out.println("Error");
         }
     }
+
     // method used to sort names by location, uses the location array which contains all the cities in driver.txt
     // loops through all cities and for each city loops through customers and appends accordingly
-    static void writeNamesLocation(ArrayList<String> locationArray, ArrayList<String> customerLocationArray){
+    static void writeNamesLocation(ArrayList<String> locationArray, ArrayList<String> customerLocationArray) {
         String groupedNamesAndLocations = "";
-        for(int i = 0; i < locationArray.size(); i++){
-            for(int e = 0; e < customerLocationArray.size(); e++){
-                if(customerLocationArray.get(e).contains(locationArray.get(i))){
+
+        for (int i = 0; i < locationArray.size(); i++) {
+            for (int e = 0; e < customerLocationArray.size(); e++) {
+                if (customerLocationArray.get(e).contains(locationArray.get(i))) {
                     groupedNamesAndLocations += (customerLocationArray.get(e) + "\r\n");
                 }
             }
         }
+
         try { // in the end writes string to file
             FileWriter file = new FileWriter("Customer&Location.txt");
             file.write(groupedNamesAndLocations);
@@ -372,6 +387,7 @@ public class Delivery {
             System.out.println("Error");
         }
     }
+
     // receives updated driver load list and prints to .txt file
     static void writeCustomerOrderFile(String updatedDriverList) {
         try {
@@ -382,8 +398,9 @@ public class Delivery {
             System.out.println("Error");
         }
     }
+
     // used to create 2 new arraylist for two new .txt files
-    static void customerList(ArrayList<String> customerOrderArray, ArrayList<String> customerLocationArray, Customer customer1, Restaurant restaurant1){
+    static void customerList(ArrayList<String> customerOrderArray, ArrayList<String> customerLocationArray, Customer customer1, Restaurant restaurant1) {
         customerOrderArray.add(customer1.name + ": Order Number " + restaurant1.orderNumber + "\r\n");
         customerLocationArray.add(customer1.name + " " + customer1.city);
     }
