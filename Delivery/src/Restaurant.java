@@ -3,8 +3,10 @@ import java.util.ArrayList;
 public class Restaurant {
     String [] menu;
     String name, location, contact;
+
     ArrayList<Integer> mealOrderInfo;
     ArrayList<String> mealList = new ArrayList<>();
+
     int total = 0,orderNumber;
 
     public Restaurant(String [] menu, String name, String location, String contact, ArrayList<Integer> mealOrderInfo, int orderNumber){
@@ -17,10 +19,13 @@ public class Restaurant {
 
         list();
     }
+
     // getting all data and assigning it to variable
     public void list(){
         int meal;
+
         String mealString = "", mealPrice = "",mealAmount = "";
+
         for (int i = 0; i < mealOrderInfo.size(); i++){
             meal = mealOrderInfo.get(i);
             mealAmount = String.valueOf(mealOrderInfo.get(i + 1));
@@ -41,7 +46,9 @@ public class Restaurant {
                 mealString = menu[6];
                 mealPrice = menu[7];
             }
+
             i++;// incrementing in 2's
+
             mealList.add(mealAmount);
             mealList.add(mealString);
             mealList.add(mealPrice);
