@@ -226,7 +226,7 @@ public class Delivery {
         String[] parts;
         int loadPlaceholder, dLoad = 99999;
         try {// used mainly for if file not present
-            File x = new File("drivers.txt");
+            File x = new File("driver-info.txt");
             Scanner scanner = new Scanner(x);
             while (scanner.hasNextLine()) {
                 inputString = scanner.nextLine();
@@ -257,7 +257,7 @@ public class Delivery {
         String inputString;
         String[] parts;
         try {// used mainly for if file not present
-            File x = new File("drivers.txt");
+            File x = new File("driver-info.txt");
             Scanner scanner = new Scanner(x);
             while (scanner.hasNextLine()) {
                 inputString = scanner.nextLine();
@@ -280,7 +280,7 @@ public class Delivery {
         String[] parts;
         int tempNumber;
         try {
-            File x = new File("drivers.txt");
+            File x = new File("driver-info.txt");
             Scanner scanner = new Scanner(x);
             while (scanner.hasNextLine()) {
                 inputString = scanner.nextLine();
@@ -375,7 +375,7 @@ public class Delivery {
     // receives updated driver load list and prints to .txt file
     static void writeCustomerOrderFile(String updatedDriverList) {
         try {
-            FileWriter driverList = new FileWriter("drivers.txt");
+            FileWriter driverList = new FileWriter("driver-info.txt");
             driverList.write(updatedDriverList);
             driverList.close();
         } catch (Exception e) {
